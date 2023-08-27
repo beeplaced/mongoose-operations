@@ -31,4 +31,16 @@ module.exports = class {
         }
     }
 
+    findAllFields = async (match, connection) => {
+        try {
+            const AGGREGATE = [
+                { $match: match },
+                { $addFields: {} }
+            ]
+            return await connection.aggregate((AGGREGATE))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 }
