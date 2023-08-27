@@ -28,6 +28,7 @@ module.exports = class {
             return res[0]
         } catch (error) {
             console.log(error)
+            return 300
         }
     }
 
@@ -40,6 +41,7 @@ module.exports = class {
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
             console.log(error)
+            return 300
         }
     }
 
@@ -53,6 +55,7 @@ module.exports = class {
             return result[0] ? result[0] : false
         } catch (error) {
             console.log(error)
+            return 300
         }
     }
 
@@ -68,6 +71,7 @@ module.exports = class {
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
             console.log(error)
+            return 300
         }
     }
 
@@ -101,6 +105,7 @@ module.exports = class {
             return data[0] ? data[0].count : 0
         } catch (error) {
             console.log(error)
+            return 300
         }
     }
 
