@@ -83,6 +83,16 @@ module.exports = class {
         }
     }
 
+    updateObj = async (rowID, set, connection) => {
+        try {
+        const update = await connection.updateOne({ _id: rowID }, set)
+        if (update.acknowledged === true && update.modifiedCount === 1) return 200
+        } catch (error) {
+            console.log(error)
+            return 300
+        }
+    }
+
     countResults = async (match, connection) => {
         try {
             const data = await connection.aggregate(([
