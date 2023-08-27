@@ -45,6 +45,20 @@ module.exports = class {
         }
     }
 
+    findOneByProject = async (match, projects, connection) => {
+        try {
+            const AGGREGATE = [
+                { $match: match },
+                { $project: projects }
+            ]
+            const data = await connection.aggregate((AGGREGATE))
+            return data[0] || false
+        } catch (error) {
+            console.log(error)
+            return 300
+        }
+    }
+
     findAllFieldsByID = async (rowID, connection) => {
         try {
             const AGGREGATE = [
