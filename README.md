@@ -5,12 +5,12 @@ a set of mongoose-operations to create, find, update, count on a given connectio
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
-npm i mongoose-operations
+```
+$ npm i mongoose-operations
+```
 
 ## Features
 
@@ -21,7 +21,7 @@ npm i mongoose-operations
 
 ## Create new Fields
 
-Create new Data in Collection will return _id and existingt Fields, if data already exists on indexed match
+Create new Data in Collection will return _id and existing Fields, if data already exists on indexed match
 
 ```js
 
