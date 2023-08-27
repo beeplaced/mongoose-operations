@@ -59,6 +59,19 @@ module.exports = class {
         }
     }
 
+    findManyByProject = async (match, projects, connection) => {
+        try {
+            const AGGREGATE = [
+                { $match: match },
+                { $project: projects }
+            ]
+            return await connection.aggregate((AGGREGATE))
+        } catch (error) {
+            console.log(error)
+            return 300
+        }
+    }
+
     findAllFieldsByID = async (rowID, connection) => {
         try {
             const AGGREGATE = [
@@ -106,10 +119,10 @@ module.exports = class {
         const update = await connection.updateOne({ _id: rowID }, set)
         if (update.acknowledged === true && update.modifiedCount === 1) return 200
         } catch (err) {
-            console.log(err)
             if (err.code === 11000) { // Duplicate key
                 return 209 // Already Exists
             }
+            console.log(err)
             return 300
         }
     }
