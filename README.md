@@ -19,9 +19,9 @@ npm i mongoose-operations
   * Update specific Object keys
   * Count results by match
 
-## Usage
+## Create new Fields
 
-To view the examples, clone the Express repo and install the dependencies:
+Create new Data in Collection will return _id and existingt Fields, if data already exists on indexed match
 
 ```js
 
@@ -29,9 +29,9 @@ const mongooseOperations = require('mongoose-operations')
 const instance = new mongooseOperations()
 
 const connection = DBConnect().model(
-    mainTable,
+    TABLE,
     SCHEMA,
-    mainTable)
+    TABLE)
 
 module.exports = class {
 
@@ -40,5 +40,5 @@ createPackageMeta = async (title) =>
     { title: 'MyTitle' }, 
     connection
     )
-
+}
 ```
