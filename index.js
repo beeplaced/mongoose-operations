@@ -10,6 +10,7 @@ module.exports = class {
             const SaveObj = new DBCon(save)
             return await SaveObj.save()
         } catch (err) {
+            console.log(err)
             if (err.code === 11000) { // Duplicate key
                 const fillObj = await this.add(err.keyValue, connection)
                 return Object.assign({}, { e: err.code }, fillObj)
