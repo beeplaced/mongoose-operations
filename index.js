@@ -91,8 +91,11 @@ module.exports = class {
         try {
         const update = await connection.updateOne({ _id: rowID }, set)
         if (update.acknowledged === true && update.modifiedCount === 1) return 200
-        } catch (error) {
-            console.log(error)
+        } catch (err) {
+            console.log(err)
+            if (err.code === 11000) { // Duplicate key
+                return 209 // Already Exists
+            }
             return 300
         }
     }
