@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 module.exports = class {
 
-    create = async (save, connection) => {
-        const save = Object.assign( { _id: new mongoose.mongo.ObjectId() }, save )
+    create = async (input, connection) => {
+        const save = Object.assign({ _id: new mongoose.mongo.ObjectId() }, input )
         mongoose.models = {}
         try {
             const DBCon = connection
