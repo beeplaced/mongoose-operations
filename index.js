@@ -83,4 +83,15 @@ module.exports = class {
         }
     }
 
+    countResults = async (match, connection) => {
+        try {
+            const data = await connection.aggregate(([
+                { $match: match },
+                { $group: { _id: null, count: { $sum: 1 } } }]))
+            return data[0] ? data[0].count : 0
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 }

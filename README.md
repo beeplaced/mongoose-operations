@@ -1,5 +1,5 @@
 # mongoose-operations
-a set of mongoose-operations to create, find, update on a given connection
+a set of mongoose-operations to create, find, update, count on a given connection
 
 ## Table of Contents
 
