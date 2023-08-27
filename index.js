@@ -43,6 +43,19 @@ module.exports = class {
         }
     }
 
+    findAllFieldsByID = async (rowID, connection) => {
+        try {
+            const AGGREGATE = [
+                { $match: { _id: mongoose.Types.ObjectId(rowID) } },
+                { $addFields: {} }
+            ]
+            const result = await connection.aggregate((AGGREGATE))
+            return result[0] ? result[0] : false
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     findFieldUnique = async (match, field, connection) => {
         try {
             const AGGREGATE = [
@@ -55,6 +68,18 @@ module.exports = class {
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    updateObjKey = async (rowID, set, connection) => {
+        try {
+            if (Object.keys(set).length === 0) return 100 // no changes
+                const condition = { _id: mongoose.Types.ObjectId(rowID) }
+                const update = await connection.updateOne(condition, { $set: set })
+                if (update.acknowledged === true && update.modifiedCount === 1) return 200
+        } catch (error) {
+            console.log(error)
+            return 300
         }
     }
 
