@@ -42,3 +42,13 @@ createPackageMeta = async (title) =>
     )
 }
 ```
+
+return if title already exists
+
+```js
+{
+  e: 11000,
+  _id: new ObjectId("64e9c309a90689fbecefb465"),
+  title: 'MyTitle',
+}
+```
