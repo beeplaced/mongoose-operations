@@ -10,10 +10,9 @@ module.exports = class {
             const SaveObj = new DBCon(save)
             return await SaveObj.save()
         } catch (err) {
-            console.log(err)
             if (err.code === 11000) { // Duplicate key
                 const fillObj = await this.add(err.keyValue, connection)
-                return Object.assign({}, { e: err.code }, fillObj)
+                return Object.assign({ e: err.code }, fillObj)
             }
             return 300
         }
@@ -25,7 +24,8 @@ module.exports = class {
                 { $match: match },
                 { $addFields: {} }
             ]
-            return await connection.aggregate((AGGREGATE))
+            const res = await connection.aggregate((AGGREGATE))
+            return res[0]
         } catch (error) {
             console.log(error)
         }
