@@ -43,9 +43,8 @@ module.exports = class {
         }
     }
 
-    findFieldUnique = async (input) => {
+    findFieldUnique = async (match, field, connection) => {
         try {
-            const { match, field, connection } = input
             const AGGREGATE = [
                 { $match: match },
                 { $group: { _id: null, [field]: { $addToSet: `$${field}` } } },
