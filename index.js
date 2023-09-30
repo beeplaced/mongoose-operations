@@ -86,16 +86,17 @@ module.exports = class {
         }
     }
 
-    findFieldUnique = async (match, field, connection) => {
+    findFieldUnique = async (match, field, connection, limit=false) => {
         try {
-            const AGGREGATE = [
+            const A = [
                 { $match: match },
                 { $group: { _id: null, [field]: { $addToSet: `$${field}` } } },
                 { $unwind: `$${field}` },
                 { $sort: { [field]: 1 } },
                 { $project: { _id: 0 } }
             ]
-            return await connection.aggregate((AGGREGATE))
+            if (limit) A.push({ $limit: limit })
+            return await connection.aggregate((A))
         } catch (error) {
             console.log(error)
             return 300
