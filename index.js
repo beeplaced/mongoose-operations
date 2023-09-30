@@ -98,8 +98,7 @@ module.exports = class {
             ]
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: 300, error}
         }
     }
 
