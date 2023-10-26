@@ -102,6 +102,27 @@ module.exports = class {
         }
     }
 
+    findFieldUniqueNested = async (match, field, connection, limit = false) => {
+        try {
+            const AGGREGATE = [
+                { $match: match },
+                {
+                    $group: {
+                        _id: null,
+                        dynamicField: { $addToSet: `$${field}` }
+                    }
+                },
+                { $unwind: '$dynamicField' },
+                { $sort: { dynamicField: 1 } },
+                ...(limit ? [{ $limit: limit }] : []),
+                { $project: { _id: 0 } }
+            ];
+            return await connection.aggregate((AGGREGATE))
+        } catch (error) {
+            return { status: 300, error }
+        }
+    }
+
     updateObjKey = async (rowID, set, connection) => {
         try {
             if (Object.keys(set).length === 0) return 100 // no changes
