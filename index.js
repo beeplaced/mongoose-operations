@@ -45,7 +45,7 @@ module.exports = class {
 
     findAllFieldsSortLower = async (match, projects, entry, connection) => {
         try {
-            if (!projects || !sort) return false
+            if (!projects || !entry) return { error: 'field missing' }
             const projectentry = { ...projects, lowercasedEntry: { $toLower: `${entry}` } };
             const AGGREGATE = [
                 { $match: match },
