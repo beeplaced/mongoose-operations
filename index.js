@@ -14,7 +14,7 @@ module.exports = class {
                 const fillObj = await this.add(err.keyValue, connection)
                 return Object.assign({ e: err.code }, fillObj)
             }
-            return 300
+            return { status: err.status || 300, error:err }
         }
     }
 
@@ -27,8 +27,7 @@ module.exports = class {
             const res = await connection.aggregate((AGGREGATE))
             return res[0]
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
 
@@ -40,8 +39,23 @@ module.exports = class {
             ]
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
+        }
+    }
+
+    findAllFieldsSortLower = async (match, projects, entry, connection) => {
+        try {
+            if (!projects || !sort) return false
+            const projectentry = { ...projects, lowercasedEntry: { $toLower: `${entry}` } };
+            const AGGREGATE = [
+                { $match: match },
+                { $project: projectentry },
+                { $sort: { lowercasedEntry: 1 } },
+                { $project: projects }
+            ];
+            return await connection.aggregate((AGGREGATE))
+        } catch (error) {
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
 
@@ -54,8 +68,7 @@ module.exports = class {
             const data = await connection.aggregate((AGGREGATE))
             return data[0] || false
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
 
@@ -67,8 +80,7 @@ module.exports = class {
             ]
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
 
@@ -81,26 +93,9 @@ module.exports = class {
             const result = await connection.aggregate((AGGREGATE))
             return result[0] ? result[0] : false
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
-
-    // findFieldUnique = async (match, field, connection, limit=false) => {
-    //     try {
-    //         const AGGREGATE = [
-    //             { $match: match },
-    //             { $group: { _id: null, [field]: { $addToSet: `$${field}` } } },
-    //             { $unwind: `$${field}` },
-    //             { $sort: { [field]: 1 } },
-    //             ...(limit ? [{ $limit: limit }] : []),
-    //             { $project: { _id: 0 } }
-    //         ]
-    //         return await connection.aggregate((AGGREGATE))
-    //     } catch (error) {
-    //         return { status: 300, error}
-    //     }
-    // }
 
     findFieldUnique = async (match, field, connection, limit = false) => {
         try {
@@ -119,7 +114,7 @@ module.exports = class {
             ];
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
-            return { status: 300, error }
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
 
@@ -130,8 +125,7 @@ module.exports = class {
                 const update = await connection.updateOne(condition, { $set: set })
                 if (update.acknowledged === true && update.modifiedCount === 1) return 200
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
 
@@ -143,8 +137,7 @@ module.exports = class {
             if (err.code === 11000) { // Duplicate key
                 return 209 // Already Exists
             }
-            console.log(err)
-            return 300
+            return { status: err.status || 300, error:err }
         }
     }
 
@@ -155,8 +148,7 @@ module.exports = class {
                 { $group: { _id: null, count: { $sum: 1 } } }]))
             return data[0] ? data[0].count : 0
         } catch (error) {
-            console.log(error)
-            return 300
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
     }
 
