@@ -77,13 +77,13 @@ module.exports = class {
             const AGGREGATE = [
                 { $match: match },
                 { $project: projects },
-                ...(sort ? { $sort: sort } : { $sort: { _id: 1 } }),
-            ]
-            return await connection.aggregate((AGGREGATE))
+                ...(sort ? [{ $sort: sort }] : [{ $sort: { _id: 1 } }]),
+            ];
+            return await connection.aggregate(AGGREGATE);
         } catch (error) {
             return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }
-    }
+    };
 
     findAllFieldsByID = async (rowID, connection) => {
         try {
