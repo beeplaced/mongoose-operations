@@ -72,11 +72,12 @@ module.exports = class {
         }
     }
 
-    findManyByProject = async (match, projects, connection) => {
+    findManyByProject = async (match, projects, connection, sort = false) => {
         try {
             const AGGREGATE = [
                 { $match: match },
-                { $project: projects }
+                { $project: projects },
+                ...(sort ? { $sort: sort } : { $sort: { _id: 1 } }),
             ]
             return await connection.aggregate((AGGREGATE))
         } catch (error) {
