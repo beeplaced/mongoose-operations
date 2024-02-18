@@ -125,6 +125,7 @@ module.exports = class {
                 const condition = { _id: new mongoose.Types.ObjectId(rowID) }
                 const update = await connection.updateOne(condition, { $set: set })
                 if (update.acknowledged === true && update.modifiedCount === 1) return 200
+                return update
         } catch (error) {
             return { status: error.status || 500, error: error.message || "Internal Server Error" };
         }

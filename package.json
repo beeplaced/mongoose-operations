@@ -1,6 +1,6 @@
 {
   "name": "mongoose-operations",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "set of mongoose-operations",
   "main": "index.js",
   "scripts": {
