@@ -1,10 +1,12 @@
-const mongoose = require('mongoose');
-
 module.exports = class {
 
+    constructor(mongoose) {
+        this.mongoose = mongoose
+    }
+
     create = async (input, connection) => {
-        const save = Object.assign({ _id: new mongoose.mongo.ObjectId() }, input )
-        mongoose.models = {}
+        const save = Object.assign({ _id: new this.mongoose.mongo.ObjectId() }, input )
+        this.mongoose.models = {}
         try {
             const DBCon = connection
             const SaveObj = new DBCon(save)
@@ -88,7 +90,7 @@ module.exports = class {
     findAllFieldsByID = async (rowID, connection) => {
         try {
             const AGGREGATE = [
-                { $match: { _id: new mongoose.Types.ObjectId(rowID) } },
+                { $match: { _id: new this.mongoose.Types.ObjectId(rowID) } },
                 { $addFields: {} }
             ]
             const result = await connection.aggregate((AGGREGATE))
@@ -122,7 +124,7 @@ module.exports = class {
     updateObjKey = async (rowID, set, connection) => {
         try {
             if (Object.keys(set).length === 0) return 100 // no changes
-                const condition = { _id: new mongoose.Types.ObjectId(rowID) }
+                const condition = { _id: new this.mongoose.Types.ObjectId(rowID) }
                 const update = await connection.updateOne(condition, { $set: set })
                 if (update.acknowledged === true && update.modifiedCount === 1) return 200
                 if (update.acknowledged === true && update.modifiedCount === 0) return 201 //no changes

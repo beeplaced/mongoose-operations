@@ -1,6 +1,6 @@
 {
   "name": "mongoose-operations",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "set of mongoose-operations",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/beeplaced/mongoose-operations#readme",
   "dependencies": {
-    "mongoose": "^7.4.5"
+    "mongoose": "^7.6.9"
   }
 }
