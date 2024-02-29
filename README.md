@@ -24,9 +24,9 @@ $ npm i mongoose-operations
 Create new Data in Collection will return _id and existing Fields, if data already exists on indexed match
 
 ```js
-
+const mongoose = require('mongoose') //need to pass mongoose to prevent package dups
 const mongooseOperations = require('mongoose-operations')
-const instance = new mongooseOperations()
+const instance = new mongooseOperations(mongoose)
 
 const connection = DBConnect().model(
     TABLE,

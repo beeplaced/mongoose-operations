@@ -1,6 +1,6 @@
 {
   "name": "mongoose-operations",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "set of mongoose-operations",
   "main": "index.js",
   "scripts": {
@@ -10,14 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/beeplaced/mongoose-operations.git"
   },
-  "keywords": ["mongoose","create","findall","aggregate","matchunique","updateObject"],
+  "keywords": ["create","findall","aggregate","matchunique","updateObject"],
   "author": "beeplaced",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/beeplaced/mongoose-operations/issues"
   },
-  "homepage": "https://github.com/beeplaced/mongoose-operations#readme",
-  "dependencies": {
-    "mongoose": "^7.6.9"
-  }
+  "homepage": "https://github.com/beeplaced/mongoose-operations#readme"
 }
