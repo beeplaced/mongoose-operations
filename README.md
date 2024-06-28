@@ -1,6 +1,24 @@
 # mongoose-operations
 a set of mongoose-operations to create, find, update, count on a given connection
 
+## Changelog
+
+```
+#Added createOrUpdate
+await createOrUpdate({
+      content: 'content',
+      file: {
+        size,
+        data: buffer,
+        contentType: mimetype,
+      }
+    }, 'connection')
+
+    return { status, _id } 
+    //200 created
+    //201 updated
+```
+
 ## Table of Contents
 
 - [Installation](#installation)

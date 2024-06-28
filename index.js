@@ -20,6 +20,16 @@ module.exports = class {
         }
     }
 
+    createOrUpdate = async (entry, connection) => {
+        let res = await this.create(entry, connection)
+        if ('e' in res && res.e === 11000) {
+            const updateID = res._id
+            const { _id } = await this.updateObjKey(updateID, entry, connection)
+            return { status: 201, _id }
+        }
+        return { status: 200, _id: res._id.toString() }
+    }
+
     add = async ( match, connection ) => {
         try {
             const AGGREGATE = [
@@ -126,8 +136,8 @@ module.exports = class {
             if (Object.keys(set).length === 0) return 100 // no changes
                 const condition = { _id: new this.mongoose.Types.ObjectId(rowID) }
                 const update = await connection.updateOne(condition, { $set: set })
-                if (update.acknowledged === true && update.modifiedCount === 1) return 200
-                if (update.acknowledged === true && update.modifiedCount === 0) return 201 //no changes
+                    if (update.acknowledged === true && update.modifiedCount === 1) return { status: 200, _id: rowID }
+                    if (update.acknowledged === true && update.modifiedCount === 0) return { status: 201, _id: rowID } //no changes
                 return update
         } catch (error) {
             return { status: error.status || 500, error: error.message || "Internal Server Error" };
