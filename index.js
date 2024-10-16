@@ -167,4 +167,15 @@ module.exports = class {
         }
     }
 
+    deleteByID = async (rowID, connection) => {
+        try {
+            const del = await connection.deleteOne({ _id: rowID })
+            if (del.deletedCount !== 1) return { status: 300 }
+            del.rowID = rowID
+            return { del, status: 200 }
+        } catch (error) {
+            return { status: error.status || 500, error: error.message || "Internal Server Error" };
+        }
+    }
+
 }

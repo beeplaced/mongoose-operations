@@ -36,6 +36,7 @@ $ npm i mongoose-operations
   * Find all Fields in a Collection using Aggregate
   * Update specific Object keys
   * Count results by match
+  * Delete Row by ID
 
 ## Create new Fields
 
