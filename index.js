@@ -8,9 +8,9 @@ module.exports = class {
         const save = Object.assign({ _id: new this.mongoose.mongo.ObjectId() }, input )
         this.mongoose.models = {}
         try {
-            const DBCon = connection
-            const SaveObj = new DBCon(save)
-            return await SaveObj.save()
+            const DBCon = connection;
+            const SaveObj = new DBCon(save);
+            return await SaveObj.save();
         } catch (err) {
             if (err.code === 11000) { // Duplicate key
                 const fillObj = await this.add(err.keyValue, connection)
@@ -21,6 +21,7 @@ module.exports = class {
     }
 
     createOrUpdate = async (entry, connection) => {
+        try {
         let res = await this.create(entry, connection)
         if ('e' in res && res.e === 11000) {
             const updateID = res._id
@@ -28,6 +29,9 @@ module.exports = class {
             return { status: 201, _id }
         }
         return { status: 200, _id: res._id.toString() }
+        } catch (error) {
+            throw(error)
+        }
     }
 
     add = async ( match, connection ) => {
